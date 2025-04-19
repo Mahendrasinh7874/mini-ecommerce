@@ -28,15 +28,12 @@ const Cart = () => {
     console.log({ updatedProduct });
     dispatch(updateCart(updatedProduct));
   };
+
   const decrease = (id) => {
-    const updatedProduct = cart.map((c) =>
-      c.id === id
-        ? {
-            ...c,
-            qty: c.qty - 1,
-          }
-        : c
-    );
+    const updatedProduct = cart
+      .map((c) => (c.id === id ? { ...c, qty: c.qty - 1 } : c))
+      .filter((c) => c.qty > 0);
+
     dispatch(updateCart(updatedProduct));
   };
 
@@ -70,7 +67,7 @@ const Cart = () => {
                   <button className="bg-blue-600 flex items-center gap-x-5 rounded text-white text-base px-4 ">
                     <span
                       className={`border-r pr-3 py-2 border-[#d4d3d3] ${
-                        cart.find((cart) => cart.id === product.id)?.qty === 1
+                        cart.find((cart) => cart.id === product.id)?.qty === 0
                           ? "cursor-default pointer-events-none"
                           : "cursor-pointer "
                       }`}
